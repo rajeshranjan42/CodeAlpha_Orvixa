@@ -9,7 +9,7 @@ import { Banner, Page } from '../models/Content.js';
 import { requireAdmin } from '../middleware/auth.js';
 import { HttpError, wrap } from '../middleware/error.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 const r = Router();
 r.use(requireAdmin);
 
