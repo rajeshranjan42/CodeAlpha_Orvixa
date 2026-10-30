@@ -1,8 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
-import path from 'path';
-import crypto from 'crypto';
-import { fileURLToPath } from 'url';
+import { v2 as cloudinary } from 'cloudinary';
 import Product from '../models/Product.js';
 import Order, { STATUSES } from '../models/Order.js';
 import Coupon from '../models/Coupon.js';
@@ -15,21 +13,43 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const r = Router();
 r.use(requireAdmin);
 
-const EXT = { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp' };
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: path.join(__dirname, '../../uploads'),
-    filename: (_req, file, cb) => cb(null, crypto.randomUUID() + EXT[file.mimetype]),
-  }),
-  limits: { fileSize: 2 * 1024 * 1024 },
-  fileFilter: (_req, file, cb) => (EXT[file.mimetype] ? cb(null, true) : cb(new HttpError(400, 'Only JPEG, PNG or WebP images are allowed'))),
+// ---- image upload: stored on Cloudinary (survives Render restarts) ----
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
 });
-r.post('/upload', (req, res, next) => upload.single('image')(req, res, (err) => {
-  if (err?.code === 'LIMIT_FILE_SIZE') return next(new HttpError(400, 'Image must be 2 MB or smaller'));
-  if (err) return next(err);
-  if (!req.file) return next(new HttpError(400, 'No image received'));
-  res.status(201).json({ url: `/uploads/${req.file.filename}` });
-}));
+
+const ALLOWED = ['image/jpeg', 'image/png', 'image/webp'];
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 2 * 1024 * 1024 },
+  fileFilter: (_req, file, cb) =>
+    ALLOWED.includes(file.mimetype) ? cb(null, true) : cb(new HttpError(400, 'Only JPEG, PNG or WebP images are allowed')),
+});
+
+const toCloudinary = (buffer) =>
+  new Promise((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream({ folder: 'orvixa', resource_type: 'image' }, (err, result) => (err ? reject(err) : resolve(result)))
+      .end(buffer);
+  });
+
+r.post('/upload', (req, res, next) =>
+  upload.single('image')(req, res, async (err) => {
+    if (err?.code === 'LIMIT_FILE_SIZE') return next(new HttpError(400, 'Image must be 2 MB or smaller'));
+    if (err) return next(err);
+    if (!req.file) return next(new HttpError(400, 'No image received'));
+    if (!process.env.CLOUDINARY_CLOUD_NAME) return next(new HttpError(503, 'Image storage is not set up yet'));
+    try {
+      const result = await toCloudinary(req.file.buffer);
+      res.status(201).json({ url: result.secure_url });
+    } catch {
+      next(new HttpError(502, 'Image upload failed. Please try again.'));
+    }
+  }),
+);
 
 r.get('/stats', wrap(async (_req, res) => {
   const since = new Date(Date.now() - 30 * 864e5);
