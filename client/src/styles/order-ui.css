@@ -1,0 +1,79 @@
+/* order-ui.css — order success screen and invoice. Uses theme tokens, so it follows tokens.css. */
+
+/* ---------- success screen ---------- */
+.success { max-width: 980px; margin: var(--s5) auto; background: var(--card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-2); }
+.success-hero { background: var(--nav-dark); color: #fff; text-align: center; padding: 40px 24px 36px; }
+.success-hero h1 { font-family: var(--font-display); font-size: clamp(30px, 5vw, 44px); margin: 8px 0 6px; }
+.success-hero p { margin: 0 auto 20px; color: #d9d6cf; max-width: 460px; }
+.order-chip { display: inline-flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .2); border-radius: 999px; padding: 8px 8px 8px 18px; }
+.order-chip span { font-size: 12px; color: #d9d6cf; }
+.order-chip b { font-size: 18px; letter-spacing: 1px; }
+.order-chip button { background: rgba(255, 255, 255, .15); color: #fff; border: 0; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: grid; place-items: center; transition: transform var(--dur-fast), background var(--dur-fast); }
+.order-chip button:hover { background: var(--btn-cart); transform: scale(1.08); }
+.success-body { padding: 28px; }
+.success-steps { list-style: none; display: flex; justify-content: space-between; gap: 8px; margin: 0 0 28px; padding: 0; position: relative; }
+.success-steps::before { content: ''; position: absolute; left: 12%; right: 12%; top: 14px; height: 2px; background: var(--border); }
+.success-steps li { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+.success-steps li span { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--card); border: 2px solid var(--border); font-weight: 700; font-size: 13px; }
+.success-steps li.done { color: var(--text); font-weight: 600; }
+.success-steps li.done span { background: var(--ok); border-color: var(--ok); color: #fff; }
+.success-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px; }
+@media (max-width: 760px) { .success-grid { grid-template-columns: 1fr; } .success-body { padding: 18px; } }
+.success-grid h2 { font-size: 20px; margin-bottom: 12px; }
+.success-items { list-style: none; margin: 0; padding: 0; }
+.success-items li { display: grid; grid-template-columns: 64px 1fr auto; gap: 14px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.success-items li:last-child { border-bottom: 0; }
+.success-items img { width: 64px; height: 64px; object-fit: contain; background: #fff; border: 1px solid var(--border); border-radius: 10px; }
+.success-items div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.success-grid aside { background: var(--page-bg); border-radius: 14px; padding: 18px; align-self: start; }
+.success-sum { margin: 0 0 14px; display: flex; flex-direction: column; gap: 8px; }
+.success-sum div { display: flex; justify-content: space-between; gap: 12px; }
+.success-sum dt, .success-sum dd { margin: 0; }
+.success-sum .total { border-top: 1px dashed var(--border); padding-top: 10px; font-size: 20px; font-weight: 700; color: var(--price); }
+.success-info { list-style: none; margin: 0; padding: 14px 0 0; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; font-size: 14px; }
+.success-info li { display: flex; gap: 10px; align-items: flex-start; }
+.success-info svg { flex: none; margin-top: 2px; color: var(--link); }
+.success-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 28px; }
+
+/* ---------- invoice ---------- */
+.inv-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; max-width: 860px; margin: 0 auto 14px; flex-wrap: wrap; }
+.invoice-page { padding-top: var(--s5); }
+.invoice-sheet { position: relative; max-width: 860px; margin: 0 auto var(--s5); background: #fff; color: #1a1a1a; border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow-1); padding: 44px 48px; overflow: hidden; }
+@media (max-width: 640px) { .invoice-sheet { padding: 22px 16px; } }
+.inv-stamp { position: absolute; right: 48px; top: 150px; transform: rotate(-12deg); border: 3px solid var(--ok); color: var(--ok); font-weight: 800; font-size: 26px; letter-spacing: 3px; padding: 2px 16px; border-radius: 8px; opacity: .22; pointer-events: none; }
+.inv-head { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-bottom: 22px; border-bottom: 3px solid #141414; }
+.inv-logo { font-family: var(--font-display); font-size: 34px; font-weight: 800; letter-spacing: -1px; }
+.inv-logo b { color: #ff6b5b; }
+.inv-brand { display: flex; flex-direction: column; gap: 2px; } .inv-brand small { color: #6b6760; }
+.inv-brand p { margin: 10px 0 0; font-size: 12px; color: #6b6760; line-height: 1.5; }
+.inv-title { text-align: right; } .inv-title h2 { font-family: var(--font-display); font-size: 28px; margin: 0 0 10px; text-transform: uppercase; letter-spacing: 2px; }
+.inv-title dl { margin: 0; display: flex; flex-direction: column; gap: 3px; font-size: 13px; }
+.inv-title dl div { display: flex; justify-content: flex-end; gap: 12px; } .inv-title dt { color: #6b6760; } .inv-title dd { margin: 0; font-weight: 600; min-width: 110px; text-align: right; }
+.inv-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 22px; padding: 22px 0; }
+.inv-meta h3, .inv-notes h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #6b6760; margin: 0 0 6px; font-weight: 700; }
+.inv-meta p, .inv-notes p { margin: 0 0 4px; font-size: 14px; line-height: 1.55; }
+.inv-table-wrap { overflow-x: auto; }
+.inv-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.inv-table thead th { background: #141414; color: #fff; text-align: left; padding: 10px 12px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+.inv-table td { padding: 12px; border-bottom: 1px solid #e5e2da; vertical-align: top; }
+.inv-table tbody tr:nth-child(even) td { background: #faf9f6; }
+.inv-table .r { text-align: right; white-space: nowrap; }
+.inv-bottom { display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; padding-top: 22px; }
+@media (max-width: 640px) { .inv-bottom { grid-template-columns: 1fr; } }
+.inv-notes p { color: #4a4640; font-size: 13px; }
+.inv-totals { margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px; }
+.inv-totals div { display: flex; justify-content: space-between; gap: 12px; } .inv-totals dt, .inv-totals dd { margin: 0; }
+.inv-totals .muted { color: #6b6760; }
+.inv-totals .grand { background: #141414; color: #fff; padding: 12px 14px; border-radius: 8px; font-size: 18px; font-weight: 700; margin-top: 4px; }
+.inv-foot { margin-top: 30px; padding-top: 14px; border-top: 1px dashed #cfcbc1; text-align: center; font-size: 12px; color: #6b6760; }
+
+/* ---------- print: only the invoice sheet ---------- */
+@media print {
+  @page { margin: 12mm; }
+  body { background: #fff !important; }
+  body * { visibility: hidden; }
+  .invoice-sheet, .invoice-sheet * { visibility: visible; }
+  .invoice-sheet { position: absolute; left: 0; top: 0; width: 100%; max-width: none; margin: 0; border: 0; border-radius: 0; box-shadow: none; padding: 0; }
+  .no-print { display: none !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

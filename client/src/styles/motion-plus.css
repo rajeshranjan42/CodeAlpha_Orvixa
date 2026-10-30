@@ -1,0 +1,81 @@
+/* motion-plus.css — extra animation. Only transform/opacity are animated; all of it is
+   switched off by motion.css under prefers-reduced-motion. */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-100%); } to { opacity: 1; transform: none; } }
+@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.07); } }
+@keyframes wiggle { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-12deg); } 75% { transform: rotate(12deg); } }
+@keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes slideInLeft { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: none; } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+
+/* header drops in once */
+.header { animation: slideDown .5s var(--ease-out) backwards; }
+
+/* products appear one after another (backwards = no clash with hover lift) */
+.grid > .pcard, .car-track > .pcard, .stat, .acc-card { animation: fadeUp .5s var(--ease-out) backwards; }
+.grid > .pcard:nth-child(1), .car-track > .pcard:nth-child(1) { animation-delay: 0ms; }
+.grid > .pcard:nth-child(2), .car-track > .pcard:nth-child(2) { animation-delay: 50ms; }
+.grid > .pcard:nth-child(3), .car-track > .pcard:nth-child(3) { animation-delay: 100ms; }
+.grid > .pcard:nth-child(4), .car-track > .pcard:nth-child(4) { animation-delay: 150ms; }
+.grid > .pcard:nth-child(5), .car-track > .pcard:nth-child(5) { animation-delay: 200ms; }
+.grid > .pcard:nth-child(6), .car-track > .pcard:nth-child(6) { animation-delay: 250ms; }
+.grid > .pcard:nth-child(7), .car-track > .pcard:nth-child(7) { animation-delay: 300ms; }
+.grid > .pcard:nth-child(8), .car-track > .pcard:nth-child(8) { animation-delay: 350ms; }
+.grid > .pcard:nth-child(9), .car-track > .pcard:nth-child(9) { animation-delay: 400ms; }
+.grid > .pcard:nth-child(10), .car-track > .pcard:nth-child(10) { animation-delay: 450ms; }
+.grid > .pcard:nth-child(11), .car-track > .pcard:nth-child(11) { animation-delay: 500ms; }
+.grid > .pcard:nth-child(12), .car-track > .pcard:nth-child(12) { animation-delay: 550ms; }
+.stat:nth-child(2) { animation-delay: 60ms; } .stat:nth-child(3) { animation-delay: 120ms; } .stat:nth-child(4) { animation-delay: 180ms; }
+.acc-card:nth-child(2) { animation-delay: 60ms; } .acc-card:nth-child(3) { animation-delay: 120ms; } .acc-card:nth-child(4) { animation-delay: 180ms; }
+
+/* hero: slow zoom on every slide, caption slides up */
+.hero-slide img { animation: kenburns 7s ease-out both; }
+.hero-cap { animation: fadeUp .6s .3s var(--ease-out) backwards; }
+.hero .nav-btn { transition: transform var(--dur-base) var(--ease-out), background var(--dur-fast); }
+.hero .nav-btn:hover { transform: scale(1.1); background: #fff; }
+
+/* page sections */
+.pdp > :nth-child(1) { animation: slideInLeft .5s var(--ease-out) backwards; }
+.pdp > :nth-child(2) { animation: fadeUp .5s .08s var(--ease-out) backwards; }
+.pdp > :nth-child(3) { animation: slideInRight .5s .16s var(--ease-out) backwards; }
+.cart-layout > :nth-child(1) { animation: slideInLeft .45s var(--ease-out) backwards; }
+.cart-layout > :nth-child(2) { animation: slideInRight .45s .1s var(--ease-out) backwards; }
+.layout-2 > aside { animation: slideInLeft .45s var(--ease-out) backwards; }
+
+/* home tiles lift and zoom their pictures */
+.tile { transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base); }
+.tile:hover { transform: translateY(-6px); box-shadow: var(--shadow-2); }
+.tile .imgs a { overflow: hidden; border-radius: 6px; display: block; }
+.tile .imgs img { transition: transform var(--dur-slow) var(--ease-out); }
+.tile .imgs a:hover img { transform: scale(1.08); }
+
+/* buttons: light sweep on hover */
+.btn-cart, .btn-buy { position: relative; overflow: hidden; }
+.btn-cart::after, .btn-buy::after { content: ''; position: absolute; top: 0; left: 0; width: 50%; height: 100%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .35), transparent); transform: translateX(-130%) skewX(-20deg); }
+.btn-cart:hover:not(:disabled)::after, .btn-buy:hover:not(:disabled)::after { transform: translateX(300%) skewX(-20deg); transition: transform .6s var(--ease-out); }
+
+/* header links: underline slides in */
+.subnav a, .subnav button { position: relative; }
+.subnav a::after, .subnav button::after { content: ''; position: absolute; left: 10px; right: 10px; bottom: 3px; height: 2px; background: var(--search-btn);
+  transform: scaleX(0); transform-origin: left; transition: transform var(--dur-base) var(--ease-out); }
+.subnav a:hover::after, .subnav button:hover::after { transform: scaleX(1); }
+.cart-link:hover #cart-icon { animation: wiggle .5s var(--ease-out); }
+.heart { transition: transform var(--dur-fast) var(--ease-out); } .heart:hover { transform: scale(1.15); }
+.icon-btn { transition: transform var(--dur-fast); } .icon-btn:hover { transform: scale(1.12); }
+
+/* empty states float */
+.empty-state svg { animation: floaty 3s ease-in-out infinite; }
+
+/* scroll progress bar and back-to-top button (Extras.jsx) */
+.scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: #ff6b5b; transform-origin: left; transform: scaleX(0); z-index: 300; pointer-events: none; }
+.to-top-fab { position: fixed; right: 20px; bottom: 20px; width: 46px; height: 46px; border-radius: 50%; border: 0; cursor: pointer; z-index: 60;
+  background: var(--nav-dark); color: #fff; display: grid; place-items: center; box-shadow: var(--shadow-2); }
+.to-top-fab:hover { background: var(--btn-cart); }
+@media (max-width: 640px) { .to-top-fab { bottom: 84px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .header, .grid > .pcard, .car-track > .pcard, .stat, .acc-card, .hero-slide img, .hero-cap, .pdp > *, .cart-layout > *, .layout-2 > aside, .empty-state svg { animation: none !important; }
+  .tile:hover, .tile .imgs a:hover img, .heart:hover, .icon-btn:hover { transform: none; }
+  .btn-cart::after, .btn-buy::after { display: none; }
+}

@@ -1,0 +1,22 @@
+/* Theme: Ink & Coral — near-black, warm white, one coral accent */
+:root {
+  --nav-dark: #141414;       /* header */
+  --nav-sub: #2a2a2a;        /* sub-nav, footer, admin sidebar */
+  --search-btn: #f3c6bf;     /* soft coral tint: search button, cart badge */
+  --btn-cart: #d93a28;       /* coral: Add to Cart (white text) */
+  --btn-cart-hover: #bf2f1f;
+  --btn-buy: #141414;        /* ink: Buy Now / Proceed to Buy (white text) */
+  --btn-buy-hover: #333333;
+  --link: #b3301f; --link-hover: #d93a28;
+  --price: #c4321e;
+  --star: #e8a200; --in-stock: #2f7d4f;
+  --page-bg: #faf9f6;        /* warm white page */
+  --card: #ffffff;
+  --text: #1a1a1a; --muted: #6b6760; --border: #e5e2da; --danger: #c4321e; --ok: #2f7d4f;
+  --font: 'DM Sans', 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px;
+  --radius: 12px; --radius-pill: 999px;
+  --shadow-1: 0 1px 3px rgba(20, 20, 20, .08); --shadow-2: 0 10px 28px rgba(20, 20, 20, .16);
+  --focus: 0 0 0 3px rgba(217, 58, 40, .35);
+}
